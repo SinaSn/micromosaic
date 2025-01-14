@@ -1,0 +1,9 @@
+===== MAKE MIGRATION =====
+alembic revision --autogenerate -m "..."
+
+===== UPGRADE DATABASE =====
+alembic upgrade head
+
+===== DOWNGRADE DATABASE =====
+alembic downgrade -1
+alembic downgrade <revision_id>

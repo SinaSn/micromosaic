@@ -18,12 +18,16 @@ class AuthCommandService:
 
         hashed_pwd = hash_password(str(command.password))
         new_user = User(
-            name=command.name,
-            email=str(command.email),
+            username=command.username,
+            email=command.email,
             hashed_password=hashed_pwd
         )
         self.user_repository.add(new_user)
-        return Response(200, "Successful", new_user)
+        access_token = create_access_token(
+            data={"sub": new_user.email},
+            expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
+        return Response(200, "Successful", {"access_token": access_token, "token_type": "bearer"})
 
     def login(self, user_login: UserLogin) -> Response:
         user = self.user_repository.get_by_email(user_login.email)
@@ -33,4 +37,5 @@ class AuthCommandService:
             data={"sub": user.email},
             expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         )
+        print(access_token)
         return Response(200, "Successful", {"access_token": access_token, "token_type": "bearer"})

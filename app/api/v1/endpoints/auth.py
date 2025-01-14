@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from app.schemas.user import Token, UserLogin, UserCreate
-from app.application.features.auth_command_service import AuthCommandService
+from app.application.features.auth.command_service import AuthCommandService
 
 router = APIRouter()
 

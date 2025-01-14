@@ -1,14 +1,15 @@
-from datetime import datetime
+from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.orm import relationship
 
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
-from app.infrastructure.db_context import Base
+from app.domain.base import Base
 
 
 class User(Base):
-    __tablename__ = 'users'
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    __tablename__ = 'user'
     email = Column(String, unique=True, index=True)
+    username = Column(String, index=True)
+    display_name = Column(String)
     hashed_password = Column(String)
-    is_deleted = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.now)
+
+    # Many-to-one relationship
+    projects = relationship("Project", back_populates="user")
