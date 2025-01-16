@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, BigInteger, ForeignKey, Boolean, SmallInteger
+from sqlalchemy import Column, String, UUID, ForeignKey, Boolean, SmallInteger
 from sqlalchemy.orm import relationship
 
 from app.domain.project_category import project_category
@@ -14,7 +14,7 @@ class Project(Base):
     cover_url = Column(String, nullable=True)
     visibility = Column(SmallInteger)
     tags = Column(SmallInteger)
-    user_id = Column(BigInteger, ForeignKey('user.id'))
+    user_id = Column(UUID, ForeignKey('user.id'))
 
     # One-to-many relationship
     user = relationship("User", back_populates="projects")

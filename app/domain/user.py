@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey, UUID
 from sqlalchemy.orm import relationship
 
 from app.domain.base import Base
@@ -13,3 +13,6 @@ class User(Base):
 
     # Many-to-one relationship
     projects = relationship("Project", back_populates="user")
+
+    # One-to-one relationship
+    user_profile = relationship('UserProfile', uselist=False, backref='user')
